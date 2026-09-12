@@ -1,0 +1,4 @@
+public class MovieBookingProfileMain {
+    static class MovieBookingProfile{private String name,otpHash;private boolean confirmed;public MovieBookingProfile(){}public MovieBookingProfile(String n){this();name=n;}public String getName(){return name;}public void setName(String n){name=n;}public boolean isConfirmed(){return confirmed;}public void setConfirmed(boolean c){confirmed=c;}public void setOtp(String otp){if(otp==null||!otp.matches("\\d{4,6}"))throw new IllegalArgumentException("OTP must contain 4 to 6 digits");otpHash=Integer.toHexString(otp.hashCode());}}
+    public static void main(String[] args){MovieBookingProfile p=new MovieBookingProfile("Rahul Dev");p.setConfirmed(true);p.setOtp("4471");System.out.println(p.getName());System.out.println(p.isConfirmed());System.out.println("OTP stored without a getter.");}
+}
