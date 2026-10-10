@@ -1,0 +1,9 @@
+class LibraryMember {protected String memberId;protected int borrowLimit;private int borrowed;private int[] fines=new int[10];private int fineCount;
+ public LibraryMember(String id,int limit){if(id==null||id.trim().length()<4)throw new IllegalArgumentException("Invalid member ID");if(limit<=0)throw new IllegalArgumentException("Borrow limit must be positive");memberId=id;borrowLimit=limit;}
+ public void borrowBook(){if(borrowed>=borrowLimit)throw new IllegalStateException("Borrow limit reached");borrowed++;}public int getBooksBorrowed(){return borrowed;}
+ public void displayInfo(){System.out.print("General Member | Books Borrowed: "+borrowed);}
+ protected void chargeFine(int amount){if(fineCount>=10)throw new IllegalStateException("Fine history full");fines[fineCount++]=amount;}
+ public int[] getFineHistory(){return java.util.Arrays.copyOf(fines,fineCount);}public int getTotalFine(){int t=0;for(int i=0;i<fineCount;i++)t+=fines[i];return t;}
+}
+class StudentMember extends LibraryMember {private String course;public StudentMember(String id,int limit,String c){super(id,limit);course=c;}public String getCourse(){return course;}@Override public void displayInfo(){System.out.print("Student Member | Course: "+course+" | Books Borrowed: "+getBooksBorrowed());}@Override protected void chargeFine(int amount){super.chargeFine(amount/2);}}
+public class LibraryMembershipMain {public static String enrollBatch(String[] ids,int limit){int ok=0,bad=0;for(String id:ids)try{new LibraryMember(id,limit);ok++;}catch(IllegalArgumentException e){bad++;}return "Enrolled: "+ok+" | Rejected: "+bad;}public static void main(String[] a){System.out.println(enrollBatch(new String[]{"STU1","LB1","STU2"," ","STU3"},3));StudentMember s=new StudentMember("STU10",3,"CSE");s.borrowBook();s.borrowBook();System.out.println(s.getBooksBorrowed());}}
